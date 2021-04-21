@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: continuumio/miniconda3:4.9.2
+
+%help
+"LongQC v1.2 image"
+
+%labels
+MAINTAINER "Guillermo Piccoli <grpiccoli@gmail.com>"
+
+%post
+## Installations
+apk add --no-cache \
+bash=5.0.17-r0 tzdata=2021a-r0 \
+build-base=0.5-r2 \
+libc-dev=0.7.2-r3 \
+zlib-dev=1.2.11-r3 \
+wget=1.20.3-r1 \
+argp-standalone=1.3-r4
+
+#set date
+cp /usr/share/zoneinfo/NZ /etc/localtime
+echo "NZ" > /etc/timezone
+
+wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | tar zxvf -
+cd LongQC-1.2.0b/minimap2-coverage/
+make
+
+#cleaning
+apk del tzdata build-base perl-app-cpanminus wget
