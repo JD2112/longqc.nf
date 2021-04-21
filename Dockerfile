@@ -31,18 +31,18 @@ RUN echo "${USER}:test_pass" | chpasswd
 ADD https://api.github.com/repos/yfukasawa/longqc/git/refs/heads/minimap2_update version.json
 RUN BIN=/usr/local/bin
 RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | tar zxvf -
-RUN cd LongQC-1.2.0b
-RUN sed -i '1s;^;#!/opt/conda/bin/python3.8\n;' longQC.py
-RUN cp -r * $BIN/
-RUN cd minimap2-coverage
-RUN make
-RUN rm -rf $BIN/minimap2-coverage
-RUN cp minimap2-coverage $BIN/
-RUN cd
-RUN rm -rf LongQC-1.2.0b
-RUN cd $BIN
-RUN ln -s longQC.py longqc
-RUN chmod +x *
+RUN cd LongQC-1.2.0b && \
+sed -i '1s;^;#!/opt/conda/bin/python3.8\n;' longQC.py && \
+cp -r * $BIN/ && \
+cd minimap2-coverage && \
+make && \
+rm -rf $BIN/minimap2-coverage && \
+cp minimap2-coverage $BIN/ && \
+cd && \
+rm -rf LongQC-1.2.0b && \
+cd $BIN && \
+ln -s longQC.py longqc && \
+chmod +x *
 
 # install dependency
 RUN conda install -y \
