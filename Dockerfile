@@ -41,7 +41,7 @@ cp minimap2-coverage $BIN/ && \
 cd && \
 rm -rf LongQC-1.2.0b && \
 cd $BIN && \
-ln -s longQC.py longqc && \
+# ln -s longQC.py longqc && \
 chmod +x *
 
 # install dependency
