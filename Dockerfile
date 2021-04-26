@@ -1,7 +1,13 @@
 # build minimap2-coverage
 FROM continuumio/miniconda3:4.9.2
-### MAINTAINER ###
+### LABELS ###
 LABEL Guillermo R. Piccoli <grpiccoli@gmail.com>
+LABEL base_image="miniconda3"
+LABEL software="LongQC docker"
+LABEL software.version="1.2"
+
+### ENV VARS ###
+ENV BIN=/usr/local/bin
 
 RUN apt-get clean all && \
     apt-get update && \
@@ -13,36 +19,18 @@ RUN apt-get clean all && \
     zlib1g-dev=1:1.2.11.dfsg-1 && \
     apt-get clean && \
     apt-get purge
-
-### ENV VARS ###
-ENV USER user
-ENV HOME /home/${USER}
-
-### LABELS ###
-LABEL base_image="miniconda3"
-LABEL software="LongQC docker"
-LABEL software.version="1.2"
-
-# add a general user account
-RUN useradd -m ${USER}
-# define a password for user
-RUN echo "${USER}:test_pass" | chpasswd
-
-ADD https://api.github.com/repos/yfukasawa/longqc/git/refs/heads/minimap2_update version.json
-RUN BIN=/usr/local/bin
 RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | tar zxvf -
 RUN cd LongQC-1.2.0b && \
+chmod +x *.py && \
 sed -i '1s;^;#!/opt/conda/bin/python3.8\n;' longQC.py && \
 cp -r * $BIN/ && \
 cd minimap2-coverage && \
 make && \
 rm -rf $BIN/minimap2-coverage && \
+chmod +x minimap2-coverage && \
 cp minimap2-coverage $BIN/ && \
 cd && \
-rm -rf LongQC-1.2.0b && \
-cd $BIN && \
-# ln -s longQC.py longqc && \
-chmod +x *
+rm -rf LongQC-1.2.0b
 
 # install dependency
 RUN conda install -y \
@@ -58,8 +46,4 @@ RUN pip install \
 pysam==0.16.0.1 \
 edlib==1.3.8.post2
 
-# change user to "user" defined above
-USER ${USER}
-
-# define a working dir
-WORKDIR $HOME
+ENTRYPOINT ["longQC.py"]
