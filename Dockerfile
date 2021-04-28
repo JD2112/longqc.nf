@@ -21,14 +21,13 @@ RUN apt-get clean all && \
     apt-get purge
 RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | tar zxvf -
 RUN cd LongQC-1.2.0b && \
-chmod +x *.py && \
 sed -i '1s;^;#!/opt/conda/bin/python3.8\n;' longQC.py && \
-cp -r * $BIN/ && \
 cd minimap2-coverage && \
 make && \
-rm -rf $BIN/minimap2-coverage && \
-chmod +x minimap2-coverage && \
-cp minimap2-coverage $BIN/ && \
+cd .. && \
+chmod +x *.py && \
+chmod +x minimap2-coverage/minimap2-coverage && \
+cp -r * $BIN/ && \
 cd && \
 rm -rf LongQC-1.2.0b
 
