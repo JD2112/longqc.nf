@@ -6,9 +6,9 @@ Channel.fromPath("$params.i_f", type: 'file')
 }
 
 process longqc {
-	tag "pb_assembly.$x"
+	tag "longqc.$r"
     publishDir "$params.out_asm"
-    container "grpiccoli/longqc:latest"
+    container "$params.c"
 
     input:
     file r from ref
@@ -18,6 +18,7 @@ process longqc {
 
     script:
     """
+    t=""
     if $params.t; then
         t="-t"
     fi
