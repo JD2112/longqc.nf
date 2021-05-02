@@ -27,6 +27,10 @@ zlib-dev=1.2.11-r3 \
 wget=1.20.3-r1 \
 argp-standalone=1.3-r4
 
+#set date
+RUN cp /usr/share/zoneinfo/NZ /etc/localtime
+RUN echo "NZ" >  /etc/timezone
+
 ## set bash as default for root ##
 RUN sed -i '1{s;/ash;/bash;}' /etc/passwd
 
@@ -62,4 +66,4 @@ RUN apk del tzdata build-base wget
 
 WORKDIR "/LongQC-1.2.0b"
 
-ENTRYPOINT ["/opt/conda/bin/python", "longQC.py"]
+ENTRYPOINT ["/opt/conda/bin/python", "/LongQC-1.2.0b/longQC.py"]
