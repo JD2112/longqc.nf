@@ -18,7 +18,8 @@ process longqc {
 
     script:
     """
-    python LongQC-1.2.0b/longQC.py sampleqc \
+    /opt/conda/bin/python /LongQC-1.2.0b/longQC.py \
+    sampleqc \
     -x $params.x \
     -o longqc \
     $r

@@ -25,7 +25,9 @@ build-base=0.5-r2 \
 libc-dev=0.7.2-r3 \
 zlib-dev=1.2.11-r3 \
 wget=1.20.3-r1 \
-argp-standalone=1.3-r4
+argp-standalone=1.3-r4 \
+libc=0.7.2-r3 \
+zlib=1.2.11-r3
 
 #set date
 RUN cp /usr/share/zoneinfo/NZ /etc/localtime
@@ -62,7 +64,7 @@ pysam=0.16.0.1 \
 python-edlib=1.3.8.post2
 
 #cleaning
-RUN apk del tzdata build-base wget
+RUN apk del tzdata build-base wget libc-dev zlib-dev
 
 WORKDIR "/LongQC-1.2.0b"
 
