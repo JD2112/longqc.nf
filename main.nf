@@ -7,32 +7,20 @@ Channel.fromPath("$params.i_f", type: 'file')
 
 process longqc {
 	tag "longqc.$r"
-    publishDir "$params.out_asm"
+    publishDir "$params.o"
     container "$params.c"
 
     input:
     file r from ref
 
     output:
-    file "*fasta" into longqc
+    file "longqc/*" into longqc
 
     script:
     """
-    t=""
-    if $params.t; then
-        t="-t"
-    fi
-    mem=`echo "$task.memory" | sed 's/[^0-9]*//g'`
-    mem=`expr \$mem / $task.cpus`
-    longQC.py sampleqc \
-    -d \
-    -p $task.cpus \
-    -m \$mem \
+    python LongQC-1.2.0b/longQC.py sampleqc \
     -x $params.x \
-    -o longqc $r \
-    -i $params.i \
-    -s $params.s \
-    -n $params.n \
-    \$t
+    -o longqc \
+    $r
     """
 }
