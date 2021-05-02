@@ -6,6 +6,9 @@ LABEL base_image="miniconda3"
 LABEL software="LongQC docker"
 LABEL software.version="1.2"
 
+### swtich to root user ###
+USER root
+
 ### ENV VARS ###
 ENV BIN=/usr/local/bin
 
