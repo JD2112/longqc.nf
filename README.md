@@ -1,19 +1,28 @@
 # longqc.nf
 
-## QUICK START
+## QUICK START - BASIC USAGE
 ```
-nextflow run https://github.com/grpiccoli/longqc.nf [-profile <{standard}|scrum>] --i_bam ccs.bam
+nextflow run https://github.com/grpiccoli/longqc.nf --i_f ccs.bam
 ```
 
 ### OPTIONS:
-| Options   | Default Value | Description
-| --------- | ------------- | ------------------------------------------------
-| -profile  | standard      | sets local executor to local (standard) or slurm (rapoi)  
-| --i_f     | REQUIRED      | path to input pacbio fasta or fastq file  
-| --s       | 4W            | sample name  
-| --i       | 4G            | Give index size for minimap2 (-I) in bp. Reduce when running on a small memory machine  
-| --n       | 1             | Number of samples  
-| --t       | false|true    | When true IsoSeq transcripts otherwise HiFi  
+| Options       | Default Value                      | Description
+| ------------- | ---------------------------------- | ---------------------------------------
+| --i_f         | REQUIRED/NULL                      | path to input bam, fastx file  
+| --a           | sampleqc -x pb-hifi -o longqc -m 2 | longqc arguments  
+| --o           | output/seq_quality                 | output directory    
+
+| Advanced Opts |                         |
+| ------------- | ----------------------- | ---------------------------------------
+| --m           | 24.GB                   | RAM memory allocation  
+| --p           | 12                      | CPU core allocation  
+| --c           | grpiccoli/longqc:latest | longqc container url:tag    
+
+| HPC Opts      |                         |
+| ------------- | ----------------------- | ---------------------------------------
+| --e           | local                   | nextflow executor (slurm, local, etc)  
+| --q           | bigmem                  | queue/partition name  
+| --t           | 4h                      | max execution time  
 
 ## Copyright and license
 [minimap2](https://github.com/lh3/minimap2) was originally developed by Heng Li and licensed under MIT. [mix'EM](https://github.com/sseemayer/mixem) was developed by Stefan Seemayer and licensed under MIT. Yoshinori slightly modified their codes.
