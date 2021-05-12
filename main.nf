@@ -24,7 +24,7 @@ process longqc {
     script:
     """
     /opt/conda/bin/python /LongQC-1.2.0b/longQC.py \
-    $params.a
+    $params.a \
     -p $task.cpus \
     $r
     """

@@ -7,14 +7,6 @@ LABEL software="LongQC docker"
 LABEL software.version="1.2"
 
 ### DEFAULTS ####
-
-## switch to root user ##
-USER root
-
-## update apk ##
-RUN apk update
-
-## install bash & tzdata ##
 RUN apk add --no-cache \
 bash=5.0.17-r0 \
 build-base=0.5-r2 \
@@ -22,24 +14,31 @@ libc-dev=0.7.2-r3 \
 zlib-dev=1.2.11-r3 \
 wget=1.20.3-r1 \
 argp-standalone=1.3-r4 \
-libc=0.7.2-r3 \
 zlib=1.2.11-r3
 
 ## set bash as default for root ##
 RUN sed -i '1{s;/ash;/bash;}' /etc/passwd
 
 ## install LongQC ##
-RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | tar zxvf - && \
-cd LongQC-1.2.0b/minimap2-coverage && \
+RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | \
+tar zxvf - && \
+cd LongQC-1.2.0b && \
+sed -i \
+-e '1{s;^;#!/opt/conda/bin/python\n;}' \
+longQC.py && \
+mv longQC.py longQC && \
+chmod +x longQC && \
+cd minimap2-coverage && \
 sed -i \
 -e '3{s;$;-I/usr/include -L/usr/lib;}' \
 -e '7{s/$/ -largp/}' \
 Makefile && \
-make
+make && \
+cd .. && \
+mv * /usr/bin
 
-## install conda pre-requirements ##
-RUN conda update -n base -c defaults conda && \
-conda install -y \
+## install conda requirements ##
+RUN conda install -y \
 python=3.9 \
 numpy=1.20.1 \
 pandas=1.2.4 \
@@ -56,8 +55,6 @@ pysam=0.16.0.1 \
 python-edlib=1.3.8.post2
 
 #cleaning
-RUN apk del build-base wget libc-dev zlib-dev
+RUN apk del build-base wget zlib-dev
 
-WORKDIR "/LongQC-1.2.0b"
-
-ENTRYPOINT ["/opt/conda/bin/python", "/LongQC-1.2.0b/longQC.py"]
+ENTRYPOINT ["longQC"]
