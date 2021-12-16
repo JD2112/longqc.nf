@@ -23,7 +23,7 @@ process longqc {
 
     script:
     """
-    /opt/conda/bin/python3 longQC.py \
+    /opt/conda/bin/python3 LongQC-1.2.0c/longQC.py \
     $params.a \
     -p $task.cpus \
     $r
