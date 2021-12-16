@@ -6,7 +6,8 @@ python3 longQC.py sampleqc -x ont-rapid \
 -p 24
 ```
 # Changes
-1. nextflow config file changed 
+1. nextflow config file changed - requires a config file for other methods
+2. main file script changed to python version 3.
 
 # <Original README from grpiccoli>
 # longqc.nf
