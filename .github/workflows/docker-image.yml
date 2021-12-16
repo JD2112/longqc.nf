@@ -1,4 +1,4 @@
-name: alv-decon
+name: longqc_docker
 
 on:
   schedule:
