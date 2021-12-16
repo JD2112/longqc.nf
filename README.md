@@ -2,7 +2,7 @@
 
 ## QUICK START - BASIC USAGE
 ```
-nextflow run https://github.com/grpiccoli/longqc.nf --i_f ccs.bam
+nextflow run https://github.com/grpiccoli/longqc.nf --i_f <sample>.bam
 ```
 
 ### OPTIONS:
