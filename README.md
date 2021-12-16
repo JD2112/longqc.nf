@@ -1,3 +1,4 @@
+[![longqc_docker](https://github.com/JD2112/longqc.nf/actions/workflows/docker-image.yml/badge.svg)](https://github.com/JD2112/longqc.nf/actions/workflows/docker-image.yml)
 # Direct run from command line after conda installation
 ```
 python3 longQC.py sampleqc -x ont-rapid \
