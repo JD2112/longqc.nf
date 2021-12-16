@@ -20,9 +20,9 @@ zlib=1.2.11-r3
 RUN sed -i '1{s;/ash;/bash;}' /etc/passwd
 
 ## install LongQC ##
-RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.gz | \
+RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0c.tar.gz | \
 tar zxvf - && \
-cd LongQC-1.2.0b && \
+cd LongQC-1.2.0c && \
 sed -i \
 -e '1{s;^;#!/opt/conda/bin/python3\n;}' \
 longQC.py && \
