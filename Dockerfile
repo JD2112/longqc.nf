@@ -24,7 +24,7 @@ RUN wget -qO- https://github.com/yfukasawa/LongQC/archive/refs/tags/1.2.0b.tar.g
 tar zxvf - && \
 cd LongQC-1.2.0b && \
 sed -i \
--e '1{s;^;#!/opt/conda/bin/python\n;}' \
+-e '1{s;^;#!/opt/conda/bin/python3\n;}' \
 longQC.py && \
 mv longQC.py longQC && \
 chmod +x longQC && \
