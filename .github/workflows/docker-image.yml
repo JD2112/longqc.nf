@@ -1,8 +1,12 @@
-name: check docker build
+name: alv-decon
 
 on:
+  schedule:
+    - cron: '19 23 * * *'
   push:
     branches: [ master ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ master ]
 
@@ -14,6 +18,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-           docker build . --file Dockerfile --tag my-image-name:latest
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/alv-decon:latest
+
+    - name: Docker Push
+      run: docker push ${{secrets.DOCKER_USER}}/alv-decon
