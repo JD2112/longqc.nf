@@ -15,6 +15,7 @@ python3 longQC.py sampleqc -x ont-rapid \
 ## QUICK START - BASIC USAGE
 ```
 nextflow run https://github.com/grpiccoli/longqc.nf --i_f <sample>.bam
+nextflow run main -profile Singularity --i_f <sample>.bam
 ```
 
 ### OPTIONS:
