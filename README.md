@@ -2,8 +2,7 @@
 # Direct run from command line after conda installation
 ```
 python3 longQC.py sampleqc -x ont-rapid \
--o /mnt/SD2/NanoMeth/QC_Results/LongQC/TB190830 \
-/mnt/SD2/NanoMeth/guppy_result/TB190830/TB190830.fastq \
+-o /mnt/SD2/NanoMeth/QC_Results/LongQC/TB190830 /mnt/SD2/NanoMeth/guppy_result/TB190830/TB190830.fastq \
 -p 24
 ```
 # Changes
